@@ -3,7 +3,11 @@ English | [简体中文](README_CN.md)
 <div align="center">
 
 
-**Enhancing Cross-Regional Generalization in UAV Forest Segmentation with Attention-Refined PP-LiteSeg Networks [PaddlePaddle](https://github.com/paddlepaddle/paddle).**
+**Enhancing Cross-Regional Generalization in UAV Forest Segmentation with Attention-Refined PP-LiteSeg Networks **
+
+
+
+[PaddlePaddle](https://github.com/paddlepaddle/paddle).**
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/github/release/PaddlePaddle/PaddleSeg.svg)](https://github.com/PaddlePaddle/PaddleSeg/releases)
