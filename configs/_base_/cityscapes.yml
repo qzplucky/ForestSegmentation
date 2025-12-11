@@ -1,0 +1,52 @@
+iters: 13000
+
+train_dataset:
+  type: Dataset
+  dataset_root: dataset/linye/
+  train_path: dataset/linye/val_lhx_10.txt
+  transforms:
+    - type: ResizeStepScaling
+      min_scale_factor: 0.5
+      max_scale_factor: 2.0
+      scale_step_size: 0.25
+    - type: RandomPaddingCrop
+      crop_size: [1024, 1024]
+    - type: RandomHorizontalFlip
+    - type: RandomDistort
+      brightness_range: 0.4
+      contrast_range: 0.4
+      saturation_range: 0.4
+    - type: Normalize
+  num_classes: 2
+  mode: train
+
+val_dataset:
+  type: Dataset
+  dataset_root: dataset/linye/
+  val_path: dataset/linye/val_lhx_10.txt
+  transforms:
+    - type: Normalize
+  num_classes: 2
+  mode: val
+
+
+optimizer:
+  type: AdamW
+  weight_decay: 0.0005
+  grad_clip_cfg:
+    name: ClipGradByNorm
+    clip_norm: 1
+
+lr_scheduler:
+  type: CosineAnnealingDecay
+  # learning_rate: 0.01
+  T_max: 150
+  warmup_iters: 1000
+  warmup_start_lr: 1.0e-5
+  learning_rate: 0.001
+
+loss:
+  types:
+    - type: CrossEntropyLoss
+      ignore_index : 0
+  coef: [1]
