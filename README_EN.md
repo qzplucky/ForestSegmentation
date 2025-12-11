@@ -500,23 +500,4 @@ PaddleSeg is released under the [Apache 2.0 license](LICENSE).
 * Thanks [simuler](https://github.com/simuler) for contributing ESPNetV1.
 * Thanks [ETTR123](https://github.com/ETTR123)(Zhang Kai) for contributing ENet, PFPNNet.
 
-## Citation
-If you find our project useful in your research, please consider citing:
 
-```latex
-@misc{liu2021paddleseg,
-      title={PaddleSeg: A High-Efficient Development Toolkit for Image Segmentation},
-      author={Yi Liu and Lutao Chu and Guowei Chen and Zewu Wu and Zeyu Chen and Baohua Lai and Yuying Hao},
-      year={2021},
-      eprint={2101.06175},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-
-@misc{paddleseg2019,
-    title={PaddleSeg, End-to-end image segmentation kit based on PaddlePaddle},
-    author={PaddlePaddle Contributors},
-    howpublished = {\url{https://github.com/PaddlePaddle/PaddleSeg}},
-    year={2019}
-}
-```
