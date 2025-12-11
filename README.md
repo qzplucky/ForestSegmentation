@@ -1,62 +1,324 @@
-# Enhancing Cross-Regional Generalization in UAV Forest Segmentation with Attention-Refined PP-LiteSeg Networks
-
 English | [简体中文](README_CN.md)
 
 <div align="center">
 
-<p align="center">
-  <img src="./docs/images/paddleseg_logo.png" align="middle" width = "500" />
-</p>
 
-**An Enhanced PP-LiteSeg Implementation for UAV Forest Segmentation with Cross-Regional Generalization**
+**Enhancing Cross-Regional Generalization in UAV Forest Segmentation with Attention-Refined PP-LiteSeg Networks [PaddlePaddle](https://github.com/paddlepaddle/paddle).**
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](LICENSE)
-![python version](https://img.shields.io/badge/python-3.8+-orange.svg)
+[![Version](https://img.shields.io/github/release/PaddlePaddle/PaddleSeg.svg)](https://github.com/PaddlePaddle/PaddleSeg/releases)
+![python version](https://img.shields.io/badge/python-3.6+-orange.svg)
 ![support os](https://img.shields.io/badge/os-linux%2C%20win%2C%20mac-yellow.svg)
+![stars](https://img.shields.io/github/stars/PaddlePaddle/PaddleSeg?color=ccf)
 
 </div>
 
-## Introduction
 
-This repository extends the **PP-LiteSeg** architecture with attention refinement mechanisms for robust **UAV-based forest segmentation** across diverse geographical regions. Our work focuses on improving cross-regional generalization capabilities to handle varying forest structures, lighting conditions, and environmental factors.
+<div align="center">
+<img src="https://github.com/shiyutang/files/blob/9590ea6bfc36139982ce75b00d3b9f26713934dd/teasor.gif"  width = "800" />  
+</div>
 
-### Key Features
-- **Two Enhanced Variants**: PP-LiteSeg-V01 (Multi-Branch Attention Fusion) and PP-LiteSeg-V02 (Residual-Enhanced Attention)
-- **Cross-Regional Adaptation**: Optimized for plantation forests (regular structure) and natural forests (high heterogeneity)
-- **Lightweight Design**: Maintains PP-LiteSeg's efficiency while enhancing feature representation
-- **Comprehensive Evaluation**: Systematic testing on multiple forest types in Yunnan Province, China
+## <img src="./docs/images/seg_news_icon.png" width="20"/> News
+<ul class="nobull">
+  <li>[2023-10-29] :fire: PaddleSeg v2.9 is released! Check more details in <a href="https://github.com/PaddlePaddle/PaddleSeg/releases">Release Notes</a>.</li>
+    <ul>
+        <li>Support <a href="./configs/multilabelseg">Multi-label segmentation</a>, it procides multi-label segmentation support on a serie of semantic segmetation models.</li>
+        <li>Release <a href="./configs/SegmentAnything">Mobile SAM</a>, faster version of Segment Anything Model. </li>
+        <li>Support <a href="./deploy/slim/act">Quant Aware Distillation Training Compression</a>  for PP-LiteSeg, PP-MobileSeg, OCRNet, and SegFormer-B0 to improve model inference speed. </li>
+    </ul>
+  <li>[2022-04-11] PaddleSeg v2.8 released <a href="./contrib/SegmentAnything">Segment Anything Model</a>, an original light-weight semantic segmentation model on mobile devices <a href="./configs/pp_mobileseg">PP-MobileSeg</a>,  <a href="./contrib/QualityInspector">QualityInspector v0.5</a>, a full-process solution for industrial quality inspection, and <a href="./contrib/PanopticSeg">PanopticSeg v0.5</a>, a universal panoptic segmentation solution.
+  <li>[2022-11-30] PaddleSeg v2.7 released a real-time human matting model <a href="./Matting/">PP-MattingV2</a>, a 3D medical image segmentation solution <a href="./contrib/MedicalSeg/">MedicalSegV2</a>, and a real-time semantic segmentation model <a href="./configs/rtformer/">RTFormer</a>.
+  <li>[2022-07-20] PaddleSeg v2.6 released a real-time human segmentation SOTA solution <a href="./contrib/PP-HumanSeg">PP-HumanSegV2</a>, a stable-version semi-automatic segmentation annotation tool <a href="./EISeg">EISeg v1.0</a>, a pseudo label pre-training method PSSL, and the source code of PP-MattingV1. </li>
+  <li>[2022-04-20] PaddleSeg v2.5 released a real-time semantic segmentation model <a href="./configs/pp_liteseg">PP-LiteSeg</a>, a trimap-free image matting model PP-MattingV1, and an easy-to-use solution for 3D medical image segmentation MedicalSegV1.</li>
+  <li>[2022-01-20] We release PaddleSeg v2.4 with EISeg v0.4, and PP-HumanSegV1 including an open-sourced dataset <a href="./contrib/PP-HumanSeg/paper.md#pp-humanseg14k-a-large-scale-teleconferencing-video-dataset">PP-HumanSeg14K</a>. </li>
 
-### Research Contributions
-1. **Novel Attention Mechanisms**: Multi-Branch Attention Fusion Module (MAFM) and its residual-enhanced variant
-2. **Cross-Regional Dataset**: Constructed UAV forest datasets from structurally different regions
-3. **Scene-Specific Optimization**: V01 excels in plantation forests; V02 performs better in natural forests
+</ul>
 
-## Model Variants
 
-### 1. PP-LiteSeg-V01
-- **Architecture**: Standard PP-LiteSeg with Multi-Branch Attention Fusion Module
-- **Strengths**: Superior boundary precision in regular plantation forests
-- **Application**: Forest farms with uniform structure and clear boundaries
+## <img src="https://user-images.githubusercontent.com/48054808/157795569-9fc77c85-732f-4870-9be0-99a7fe2cff27.png" width="20"/> Introduction
 
-### 2. PP-LiteSeg-V02  
-- **Architecture**: PP-LiteSeg with Residual-Enhanced Attention Fusion
-- **Strengths**: Better robustness in heterogeneous natural forests
-- **Application**: Natural forests with complex textures and illumination variations
+PaddleSeg is an end-to-end high-efficent development toolkit for image segmentation based on PaddlePaddle, which helps both developers and researchers in the whole process of designing segmentation models, training models, optimizing performance and inference speed, and deploying models. A lot of well-trained models and various real-world applications in both industry and academia help users conveniently build hands-on experiences in image segmentation.
 
-## Quick Start
+<div align="center">
+<img src="https://github.com/shiyutang/files/raw/main/teasor_new.gif"  width = "800" />  
+</div>
 
-### Installation
-```bash
-# Install PaddlePaddle
-pip install paddlepaddle-gpu==2.5.0
 
-# Install dependencies
-pip install -r requirements.txt
+## <img src="./docs/images/feature.png" width="20"/> Features
 
-## <img src="https://user-images.githubusercontent.com/48054808/157801371-9a9a8c65-1690-4123-985a-e0559a7f9494.png" width="20"/> Industrial Segmentation Model
+* **High-Performance Model**: Following the state of the art segmentation methods and using high-performance backbone networks, we provide 45+ models and 150+ high-quality pre-training models, which are better than other open-source implementations.
 
-</details>
+* **High Efficiency**: PaddleSeg provides multi-process asynchronous I/O, multi-card parallel training, evaluation, and other acceleration strategies, combined with the memory optimization function of the PaddlePaddle, which can greatly reduce the training overhead of the segmentation model, all these allowing developers to train image segmentation models more efficiently and at a lower cost.
 
+* **Modular Design**: We build PaddleSeg with the modular design philosophy. Therefore, based on actual application scenarios, developers can assemble diversified training configurations with *data augmentation strategies*, *segmentation models*, *backbone networks*, *loss functions*, and other different components to meet different performance and accuracy requirements.
+
+* **Complete Flow**: PaddleSeg supports image labeling, model designing, model training, model compression, and model deployment. With the help of PaddleSeg, developers can easily finish all tasks in the entire workflow.
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/14087480/176402154-390e5815-1a87-41be-9374-9139c632eb66.png" width = "800" />  
+</div>
+
+## <img src="./docs/images/chat.png" width="20"/> Community
+
+* If you have any questions, suggestions or feature requests, please do not hesitate to create an issue in [GitHub Issues](https://github.com/PaddlePaddle/PaddleSeg/issues).
+* Please scan the following QR code to join PaddleSeg WeChat group to communicate with us:
+<div align="center">
+<img src="https://paddleseg.bj.bcebos.com/images/seg_qr_code.png"  width = "200" />  
+</div>
+
+
+## <img src="./docs/images/model.png" width="20"/> Overview
+
+<table align="center">
+  <tbody>
+    <tr align="center" valign="bottom">
+      <td>
+        <b>Models</b>
+      </td>
+      <td colspan="2">
+        <b>Components</b>
+      </td>
+      <td>
+        <b>Special Cases</b>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td>
+        <ul>
+        <details><summary><b>Semantic Segmentation</b></summary>
+          <ul>
+            <li><a href="./configs/pp_liteseg">PP-LiteSeg</a> </li>
+            <li><a href="./configs/pp_mobileseg">PP-MobileSeg</a> </li>
+            <li><a href="./configs/deeplabv3p">DeepLabV3P</a> </li>
+            <li><a href="./configs/ocrnet">OCRNet</a> </li>
+            <li><a href="./configs/mobileseg">MobileSeg</a> </li>
+            <li><a href="./configs/ann">ANN</a></li>
+            <li><a href="./configs/attention_unet">Att U-Net</a></li>
+            <li><a href="./configs/bisenetv1">BiSeNetV1</a></li>
+            <li><a href="./configs/bisenet">BiSeNetV2</a></li>
+            <li><a href="./configs/ccnet">CCNet</a></li>
+            <li><a href="./configs/danet">DANet</a></li>
+            <li><a href="./configs/ddrnet">DDRNet</a></li>
+            <li><a href="./configs/decoupled_segnet">DecoupledSeg</a></li>
+            <li><a href="./configs/deeplabv3">DeepLabV3</a></li>
+            <li><a href="./configs/dmnet">DMNet</a></li>
+            <li><a href="./configs/dnlnet">DNLNet</a></li>
+            <li><a href="./configs/emanet">EMANet</a></li>
+            <li><a href="./configs/encnet">ENCNet</a></li>
+            <li><a href="./configs/enet">ENet</a></li>
+            <li><a href="./configs/espnetv1">ESPNetV1</a></li>
+            <li><a href="./configs/espnet">ESPNetV2</a></li>
+            <li><a href="./configs/fastfcn">FastFCN</a></li>
+            <li><a href="./configs/fastscnn">Fast-SCNN</a></li>
+            <li><a href="./configs/gcnet">GCNet</a></li>
+            <li><a href="./configs/ginet">GINet</a></li>
+            <li><a href="./configs/glore">GloRe</a></li>
+            <li><a href="./configs/gscnn">GSCNN</a></li>
+            <li><a href="./configs/hardnet">HarDNet</a></li>
+            <li><a href="./configs/fcn">HRNet-FCN</a></li>
+            <li><a href="./configs/hrnet_w48_contrast">HRNet-Contrast</a></li>
+            <li><a href="./configs/isanet">ISANet</a></li>
+            <li><a href="./configs/pfpn">PFPNNet</a></li>
+            <li><a href="./configs/pointrend">PointRend</a></li>
+            <li><a href="./configs/portraitnet">PotraitNet</a></li>
+            <li><a href="./configs/pp_humanseg_lite">PP-HumanSeg-Lite</a></li>
+            <li><a href="./configs/pspnet">PSPNet</a></li>
+            <li><a href="./configs/pssl">PSSL</a></li>
+            <li><a href="./configs/segformer">SegFormer</a></li>
+            <li><a href="./configs/segmenter">SegMenter</a></li>
+            <li><a href="./configs/segmne">SegNet</a></li>
+            <li><a href="./configs/setr">SETR</a></li>
+            <li><a href="./configs/sfnet">SFNet</a></li>
+            <li><a href="./configs/stdcseg">STDCSeg</a></li>
+            <li><a href="./configs/u2net">U<sup>2</sup>Net</a></li>
+            <li><a href="./configs/unet">UNet</a></li>
+            <li><a href="./configs/unet_plusplus">UNet++</a></li>
+            <li><a href="./configs/unet_3plus">UNet3+</a></li>
+            <li><a href="./configs/upernet">UperNet</a></li>
+            <li><a href="./configs/rtformer">RTFormer</a></li>
+            <li><a href="./configs/uhrnet">UHRNet</a></li>
+            <li><a href="./configs/topformer">TopFormer</a></li>
+            <li><a href="./configs/mscale_ocrnet">MscaleOCRNet-PSA</a></li>
+            <li><a href="./configs/cae">CAE</a></li>
+            <li><a href="./configs/maskformer">MaskFormer</a></li>
+            <li><a href="./configs/vit_adapter">ViT-Adapter</a></li>
+            <li><a href="./configs/hrformer">HRFormer</a></li>
+            <li><a href="./configs/lpsnet">LPSNet</a></li>
+            <li><a href="./configs/segnext">SegNeXt</a></li>
+            <li><a href="./configs/knet">K-Net</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Interactive Segmentation</b></summary>
+          <ul>
+            <li><a href="./EISeg">EISeg</a></li>
+            <li>RITM</li>
+            <li>EdgeFlow</li>
+          </ul>
+        </details>
+        <details><summary><b>Image Matting</b></summary>
+          <ul>
+              <li><a href="./Matting/configs/ppmattingv2">PP-MattingV2</a></li>
+              <li><a href="./Matting/configs/ppmatting">PP-MattingV1</a></li>
+              <li><a href="./Matting/configs/dim/dim-vgg16.yml">DIM</a></li>
+              <li><a href="./Matting/configs/modnet/modnet-hrnet_w18.yml">MODNet</a></li>
+              <li><a href="./Matting/configs/human_matting/human_matting-resnet34_vd.yml">PP-HumanMatting</a></li>
+              <li><a href="./Matting/configs/rvm">RVM</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Panoptic Segmentation</b></summary>
+          <ul>
+            <li><a href="./contrib/PanopticSeg/configs/mask2former">Mask2Former</a></li>
+            <li><a href="./contrib/PanopticSeg/configs/panoptic_deeplab">Panoptic-DeepLab</a></li>
+          </ul>
+        </details>
+      </td>
+      <td>
+        <details><summary><b>Backbones</b></summary>
+          <ul>
+            <li><a href="./paddleseg/models/backbones/hrnet.py">HRNet</a></li>
+            <li><a href="./paddleseg/models/backbones/resnet_cd.py">ResNet</a></li>
+            <li><a href="./paddleseg/models/backbones/stdcnet.py">STDCNet</a></li>
+            <li><a href="./paddleseg/models/backbones/mobilenetv2.py">MobileNetV2</a></li>
+            <li><a href="./paddleseg/models/backbones/mobilenetv3.py">MobileNetV3</a></li>
+            <li><a href="./paddleseg/models/backbones/shufflenetv2.py">ShuffleNetV2</a></li>
+            <li><a href="./paddleseg/models/backbones/ghostnet.py">GhostNet</a></li>
+            <li><a href="./paddleseg/models/backbones/lite_hrnet.py">LiteHRNet</a></li>
+            <li><a href="./paddleseg/models/backbones/xception_deeplab.py">XCeption</a></li>
+            <li><a href="./paddleseg/models/backbones/vision_transformer.py">VIT</a></li>
+            <li><a href="./paddleseg/models/backbones/mix_transformer.py">MixVIT</a></li>
+            <li><a href="./paddleseg/models/backbones/swin_transformer.py">Swin Transformer</a></li>
+            <li><a href="./paddleseg/models/backbones/top_transformer.py">TopTransformer</a></li>
+            <li><a href="./paddleseg/models/backbones/hrformer.py">HRTransformer</a></li>
+            <li><a href="./paddleseg/models/backbones/mscan.py">MSCAN</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Losses</b></summary>
+          <ul>
+            <li><a href="./paddleseg/models/losses/binary_cross_entropy_loss.py">Binary CE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/bootstrapped_cross_entropy_loss.py">Bootstrapped CE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/cross_entropy_loss.py">Cross Entropy Loss</a></li>
+            <li><a href="./paddleseg/models/losses/decoupledsegnet_relax_boundary_loss.py">Relax Boundary Loss</a></li>
+            <li><a href="./paddleseg/models/losses/detail_aggregate_loss.py">Detail Aggregate Loss</a></li>
+            <li><a href="./paddleseg/models/losses/dice_loss.py">Dice Loss</a></li>
+            <li><a href="./paddleseg/models/losses/edge_attention_loss.py">Edge Attention Loss</a></li>
+            <li><a href="./paddleseg/models/losses/focal_loss.py">Focal Loss</a></li>
+            <li><a href="./paddleseg/models/losses/binary_cross_entropy_loss.py">MultiClassFocal Loss</a></li>
+            <li><a href="./paddleseg/models/losses/gscnn_dual_task_loss.py">GSCNN Dual Task Loss</a></li>
+            <li><a href="./paddleseg/models/losses/kl_loss.py">KL Loss</a></li>
+            <li><a href="./paddleseg/models/losses/l1_loss.py">L1 Loss</a></li>
+            <li><a href="./paddleseg/models/losses/lovasz_loss.py">Lovasz Loss</a></li>
+            <li><a href="./paddleseg/models/losses/mean_square_error_loss.py">MSE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/ohem_cross_entropy_loss.py">OHEM CE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/pixel_contrast_cross_entropy_loss.py">Pixel Contrast CE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/point_cross_entropy_loss.py">Point CE Loss</a></li>
+            <li><a href="./paddleseg/models/losses/rmi_loss.py">RMI Loss</a></li>
+            <li><a href="./paddleseg/models/losses/semantic_connectivity_loss.py">Connectivity Loss</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Metrics</b></summary>
+          <ul>
+            <li>mIoU</li>
+            <li>Accuracy</li>
+            <li>Kappa</li>
+            <li>Dice</li>
+            <li>AUC_ROC</li>
+          </ul>  
+        </details>
+      </td>
+      <td>
+        <details><summary><b>Datasets</b></summary>
+          <ul>
+            <li><a href="./paddleseg/datasets/ade.py">ADE20K</a></li>  
+            <li><a href="./paddleseg/datasets/cityscapes.py">Cityscapes</a></li>
+            <li><a href="./paddleseg/datasets/cocostuff.py">COCO Stuff</a></li>
+            <li><a href="./paddleseg/datasets/voc.py">Pascal VOC</a></li>
+            <li><a href="./paddleseg/datasets/eg1800.py">EG1800</a></li>
+            <li><a href="./paddleseg/datasets/pascal_context.py">Pascal Context</a></li>  
+            <li><a href="./paddleseg/datasets/supervisely.py">SUPERVISELY</a></li>
+            <li><a href="./paddleseg/datasets/optic_disc_seg.py">OPTIC DISC SEG</a></li>
+            <li><a href="./paddleseg/datasets/chase_db1.py">CHASE_DB1</a></li>
+            <li><a href="./paddleseg/datasets/hrf.py">HRF</a></li>
+            <li><a href="./paddleseg/datasets/drive.py">DRIVE</a></li>
+            <li><a href="./paddleseg/datasets/stare.py">STARE</a></li>
+            <li><a href="./paddleseg/datasets/pp_humanseg14k.py">PP-HumanSeg14K</a></li>
+            <li><a href="./paddleseg/datasets/pssl.py">PSSL</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Data Augmentation</b></summary>
+          <ul>
+            <li>Flipping</li>  
+            <li>Resize</li>  
+            <li>ResizeByLong</li>
+            <li>ResizeByShort</li>
+            <li>LimitLong</li>  
+            <li>ResizeRangeScaling</li>  
+            <li>ResizeStepScaling</li>
+            <li>Normalize</li>
+            <li>Padding</li>
+            <li>PaddingByAspectRatio</li>
+            <li>RandomPaddingCrop</li>  
+            <li>RandomCenterCrop</li>
+            <li>ScalePadding</li>
+            <li>RandomNoise</li>  
+            <li>RandomBlur</li>  
+            <li>RandomRotation</li>  
+            <li>RandomScaleAspect</li>  
+            <li>RandomDistort</li>  
+            <li>RandomAffine</li>  
+          </ul>
+        </details>
+      </td>
+      <td>
+        <details><summary><b>Segment Anything</b></summary>
+          <ul>
+              <li><a href="./contrib/SegmentAnything">SegmentAnything</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Model Selection Tool</b></summary>
+          <ul>
+              <li><a href="./configs/smrt">PaddleSMRT</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Human Segmentation</b></summary>
+          <ul>
+              <li><a href="./contrib/PP-HumanSeg/README_cn.md">PP-HumanSegV1</a></li>
+              <li><a href="./contrib/PP-HumanSeg/README_cn.md">PP-HumanSegV2</a></li>
+          </ul>
+        </details>
+        <details><summary><b>MedicalSeg</b></summary>
+          <ul>
+            <li><a href="./contrib/MedicalSeg/configs/lung_coronavirus">VNet</a></li>
+            <li><a href="./contrib/MedicalSeg/configs/msd_brain_seg">UNETR</a></li>
+            <li><a href="./contrib/MedicalSeg/configs/acdc">nnFormer</a></li>
+            <li><a href="./contrib/MedicalSeg/configs/nnunet/msd_lung">nnUNet-D</a></li>
+            <li><a href="./contrib/MedicalSeg/configs/synapse">TransUNet</a></li>
+            <li><a href="./contrib/MedicalSeg/configs/synapse">SwinUNet</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Cityscapes SOTA Model</b></summary>
+          <ul>
+              <li><a href="./contrib/CityscapesSOTA">HMSA</a></li>
+          </ul>
+        </details>
+        <details><summary><b>CVPR Champion Model</b></summary>
+          <ul>
+              <li><a href="./contrib/AutoNUE">MLA Transformer</a></li>
+          </ul>
+        </details>
+        <details><summary><b>Domain Adaptation</b></summary>
+          <ul>
+              <li><a href="./contrib/DomainAdaptation">PixMatch</a></li>
+          </ul>
+        </details>
+      </td>  
+    </tr>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## <img src="https://user-images.githubusercontent.com/48054808/157801371-9a9a8c65-1690-4123-985a-e0559a7f9494.png" width="20"/> Industrial Segmentation Models
 
 <details>
 <summary><b>Super Lightweight Semantic Segmentation Models</b></summary>
@@ -175,17 +437,4 @@ For more examples, see [here](https://aistudio.baidu.com/aistudio/projectdetail/
 
 PaddleSeg is released under the [Apache 2.0 license](LICENSE).
 
-## Acknowledgement
-* Thanks [jm12138](https://github.com/jm12138) for contributing U<sup>2</sup>-Net.
-* Thanks [zjhellofss](https://github.com/zjhellofss) (Fu Shenshen) for contributing Attention U-Net, and Dice Loss.
-* Thanks [liuguoyu666](https://github.com/liguoyu666), [geoyee](https://github.com/geoyee) for contributing U-Net++ and U-Net3+.
-* Thanks [yazheng0307](https://github.com/yazheng0307) (LIU Zheng) for contributing quick-start document.
-* Thanks [CuberrChen](https://github.com/CuberrChen) for contributing STDC(rethink BiSeNet), PointRend and DetailAggregateLoss.
-* Thanks [stuartchen1949](https://github.com/stuartchen1949) for contributing SegNet.
-* Thanks [justld](https://github.com/justld) (Lang Du) for contributing UPerNet, DDRNet, CCNet, ESPNetV2, DMNet, ENCNet, HRNet_W48_Contrast, FastFCN, BiSeNetV1, SECrossEntropyLoss and PixelContrastCrossEntropyLoss.
-* Thanks [Herman-Hu-saber](https://github.com/Herman-Hu-saber) (Hu Huiming) for contributing ESPNetV2.
-* Thanks [zhangjin12138](https://github.com/zhangjin12138) for contributing RandomCenterCrop.
-* Thanks [simuler](https://github.com/simuler) for contributing ESPNetV1.
-* Thanks [ETTR123](https://github.com/ETTR123)(Zhang Kai) for contributing ENet, PFPNNet.
-
-
+```
