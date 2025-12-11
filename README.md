@@ -30,6 +30,12 @@ data/
 ├── val/         # Validation set
 └── test/        # Test set
 
+To download the forest dataset, please use the following link:
+
+Dataset: forestdata.zip
+Link: https://pan.baidu.com/s/1vaL9gT4XN5ZBG1CbJI2MLQ?pwd=5rkp
+
+Extraction code: 5rkp
 
 Model Training
 
@@ -38,7 +44,7 @@ python train.py --config configs/yourdata.yaml
 
 # Multi-GPU training
 python -m paddle.distributed.launch train.py \
-    --config configs/ar_ppliteseg.yaml \
+    --config configs/ppliteseg.yaml \
     --num_workers 4
 
 
